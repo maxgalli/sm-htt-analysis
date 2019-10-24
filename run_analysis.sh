@@ -34,6 +34,15 @@ for CHANNEL in ${CHANNELS[@]}; do
 done
 wait
 
+# added by myself
+exit
+
+
+
+
+
+
+
 # Write datacard
 STXS_SIGNALS="stxs_stage0"  # options: stxs_stage0, stxs_stage1p1
 CATEGORIES="stxs_stage1p1"    # options: stxs_stage0, stxs_stage1p1
