@@ -5,8 +5,8 @@ ERA=$1
 CHANNEL=$2
 VARIABLE=$3
 
-./shapes/produce_shapes_variables_nominal.sh $ERA $CHANNEL $VARIABLE
+#./shapes/produce_shapes_variables_nominal.sh $ERA $CHANNEL $VARIABLE
 
-plotting/plot_shapes_control.py -l  --era Run${ERA} --input ${ERA}_${CHANNEL}_${VARIABLE}_shapes.root --variables $VARIABLE --channels $CHANNEL --embedding --fake-factor
+plotting/plot_shapes_control.py -l  --era Run${ERA} --input ${ERA}_${CHANNEL}_${VARIABLE}_shapes.root --variables $VARIABLE --channels $CHANNEL #--embedding --fake-factor
 
 
