@@ -125,7 +125,8 @@ def parse_arguments():
         "--tag", default="ERA_CHANNEL", type=str, help="Tag of output files.")
     parser.add_argument(
         "--skip-systematic-variations",
-        default=False,
+        #default=False,
+        default=True,
         type=str,
         help="Do not produce the systematic variations.")
     return parser.parse_args()
@@ -479,6 +480,9 @@ def main(args):
                 em,
                 cuts,
                 variable=score))
+
+
+
     # Nominal histograms
     signal_nicks = ["WH125", "ZH125", "VH125", "ttH125"]
     ww_nicks = ["ggHWW125", "qqHWW125"]
