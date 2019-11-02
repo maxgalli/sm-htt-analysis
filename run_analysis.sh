@@ -26,6 +26,10 @@ CHANNELS=${@:2}      # options: em, et, mt, tt
 # Convert shapes to synced format
 ./shapes/convert_to_synced_shapes.sh $ERA
 
+
+# added by myself
+exit
+
 # Write datacard
 STXS_SIGNALS="stxs_stage0"  # options: stxs_stage0, stxs_stage1p1
 CATEGORIES="stxs_stage1p1"    # options: stxs_stage0, stxs_stage1p1
