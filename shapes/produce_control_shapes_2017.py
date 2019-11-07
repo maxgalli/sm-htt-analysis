@@ -44,7 +44,7 @@ def setup_logging(output_file, level=logging.DEBUG):
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
-        description="Produce shapes for 2016 Standard Model analysis.")
+        description="Produce shapes for 2017 Standard Model analysis.")
 
     parser.add_argument(
         "--directory",
