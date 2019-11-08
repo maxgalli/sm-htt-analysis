@@ -2,7 +2,14 @@ import ROOT
 from ROOT import TChain
 import os
 
-def CreateTChainFromPath(*args):
+def GetListOfSubTDirectoryFiles(root_file):
+    sub_tdirf = []
+    for key in root_file.GetListOfKeys():
+        sub_dir_name = key.GetName()
+        sub_tdirf.append(root_file.GetDirectory(sub_dir_name))
+    return sub_tdirf
+
+def CreateTChainFromPath(tree_name, *args):
     # Parameters:
     # every parameter is a path to a directory
     chain = TChain()
@@ -16,7 +23,7 @@ def CreateTChainFromPath(*args):
                 ├── one.root
                 └── two.root
                 '''
-                chain.Add('/'.join([path_to_dir, subdir_or_file]))
+                file_name = '/'.join([path_to_dir, subdir_or_file])
             else:
                 '''
                 case 2:
@@ -26,9 +33,14 @@ def CreateTChainFromPath(*args):
                 └── subdir_two
                     └── two.root
                 '''
-                file_name = '/'.join([path_to_dir, subdir_or_file, os.listdir(path_to_dir)[0]])
-                if '.root' in file_name:
-                    chain.Add(file_name)
-                else:
-                    pass # should raise Error??
+                path_to_subdir = '/'.join([path_to_dir, subdir_or_file])
+                file_name = '/'.join([path_to_dir, subdir_or_file, os.listdir(path_to_subdir)[0]])
+                if '.root' not in file_name:
+                    raise AttributeError(file_name)
+
+            file_object = ROOT.TFile(file_name)
+            file_content = GetListOfSubTDirectoryFiles(file_object)
+            for sub_tdirf in file_content:
+                chain.Add('/'.join([file_name, sub_tdirf.GetName(), tree_name]))
+
     return chain
