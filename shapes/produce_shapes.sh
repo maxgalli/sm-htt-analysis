@@ -25,4 +25,4 @@ python3 shapes/MyProduceShapes$ERA.py \
     --num-threads 32
 
 # Normalize fake-factor shapes to nominal
-python fake-factor-application/normalize_shifts.py ${ERA}_shapes.root
+# python fake-factor-application/normalize_shifts.py ${ERA}_shapes.root

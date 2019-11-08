@@ -23,6 +23,8 @@ import yaml
 import logging
 logger = logging.getLogger()
 
+from ShapeProducer import InputManager
+
 
 def setup_logging(output_file, level=logging.DEBUG):
     logger.setLevel(level)
@@ -145,11 +147,15 @@ def main(args):
     # Channels and processes
     # yapf: disable
     directory = args.directory
+    directory = [directory]
     et_friend_directory = args.et_friend_directory
     mt_friend_directory = args.mt_friend_directory
     tt_friend_directory = args.tt_friend_directory
     em_friend_directory = args.em_friend_directory
     ff_friend_directory = args.fake_factor_friend_directory
+
+    directories = directory + et_friend_directory
+    chain = InputManager.CreateTChainFromPath(*directories)
 
 '''
     # Era selection
