@@ -155,8 +155,25 @@ def main(args):
     ff_friend_directory = args.fake_factor_friend_directory
 
     directories = directory + et_friend_directory
-    chain = InputManager.CreateTChainFromPath(*directories)
+    chain = InputManager.CreateTChainFromPath('ntuple', *directory)
 
+    # inspect input files
+    import ROOT
+    import os
+    def Inspect(*args):
+            for path in args:
+                    subdirs = os.listdir(path)
+                    print('Subdirs in %s are:\n'.format(path))
+                    print(subdirs)
+                    for subdir in subdirs:
+                            subdir = path + '/' + subdir
+                            subdir_cont = os.listdir(subdir)
+                            print('subdir content: ', subdir_cont)
+                            root_file_name = subdir + '/' + subdir_cont[0]
+                            print('I should be a root file: ', root_file_name)
+                            f = ROOT.TFile(root_file_name)
+                            f.ls()
+    #Inspect(*directories)
 '''
     # Era selection
     if "2017" in args.era:
