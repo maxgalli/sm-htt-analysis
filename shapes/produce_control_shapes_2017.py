@@ -457,5 +457,5 @@ def main(args):
 
 if __name__ == "__main__":
     args = parse_arguments()
-    setup_logging("produce_shapes.log", logging.INFO)
+    setup_logging("produce_shapes.log")
     main(args)
