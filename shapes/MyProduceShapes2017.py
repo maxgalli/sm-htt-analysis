@@ -157,6 +157,11 @@ def main(args):
     directories = directory + et_friend_directory
     chain = InputManager.CreateTChainFromPath('ntuple', *directory)
 
+    from ROOT import RDataFrame as rdf
+
+    r = rdf(chain)
+    print(r.GetColumnNames())
+
     # inspect input files
     import ROOT
     import os
