@@ -4,8 +4,6 @@ import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True  # disable ROOT internal argument parser
 ROOT.gErrorIgnoreLevel = ROOT.kError
 
-from shape_producer import InputManager
-
 from itertools import product
 
 import argparse
@@ -14,6 +12,9 @@ import yaml
 import logging
 logger = logging.getLogger("")
 
+from shape_producer import InputManager
+
+from ROOT import RDataFrame
 
 def setup_logging(output_file, level=logging.DEBUG):
     logger.setLevel(level)
@@ -119,7 +120,19 @@ def parse_arguments():
 
 
 def main(args):
-    print("Beginnig main")
+
+    # Input files
+    directory = args.directory
+    et_friend_directory = args.et_friend_directory
+    mt_friend_directory = args.mt_friend_directory
+    tt_friend_directory = args.tt_friend_directory
+    em_friend_directory = args.em_friend_directory
+    mm_friend_directory = args.mm_friend_directory
+
+    chain = InputManager.CreateTChainFromPath('ntuple', directory, *et_friend_directory)
+
+    rdf = RDataFrame(chain)
+
 
 if __name__ == "__main__":
     args = parse_arguments()
