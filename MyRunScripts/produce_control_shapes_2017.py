@@ -129,9 +129,30 @@ def main(args):
     em_friend_directory = args.em_friend_directory
     mm_friend_directory = args.mm_friend_directory
 
-    chain = InputManager.CreateTChainFromPath('ntuple', directory, *et_friend_directory)
-
+    # Python
+    chain = InputManager.CreateTChainFromPath('ntuple', directory)
+    # debug
+    files_list = chain.GetListOfFiles()
+    for name in files_list:
+        print(name)
     rdf = RDataFrame(chain)
+    #col_dict = rdf.AsNumpy()
+    #print(len(col_dict.items()))
+    #print(col_dict)
+
+    # No sources
+    #regex = directory + '*/*/'
+    #rdf = RDataFrame('ntuple', regex)
+    #col_dict = rdf.AsNumpy()
+    #print(len(col_dict.items()))
+
+    ##### C++
+    #ROOT.gInterpreter.Declare('''#include "ShapeProducer/inc/InputManager.h"''')
+
+    #chain = ROOT.shape_producer.InputManager.CreateTChainFromPath(str, str, str, str)('ntuple', directory, *et_friend_directory)
+    #print(type(chain))
+
+    #rdf = RDataFrame(chain)
 
 
 if __name__ == "__main__":
