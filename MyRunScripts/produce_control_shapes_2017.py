@@ -129,30 +129,42 @@ def main(args):
     em_friend_directory = args.em_friend_directory
     mm_friend_directory = args.mm_friend_directory
 
-    # Python
-    chain = InputManager.CreateTChainFromPath('ntuple', directory)
-    # debug
-    files_list = chain.GetListOfFiles()
-    for name in files_list:
-        print(name)
-    rdf = RDataFrame(chain)
-    #col_dict = rdf.AsNumpy()
-    #print(len(col_dict.items()))
-    #print(col_dict)
-
-    # No sources
+    #### No sources
     #regex = directory + '*/*/'
     #rdf = RDataFrame('ntuple', regex)
     #col_dict = rdf.AsNumpy()
     #print(len(col_dict.items()))
 
-    ##### C++
-    #ROOT.gInterpreter.Declare('''#include "ShapeProducer/inc/InputManager.h"''')
-
-    #chain = ROOT.shape_producer.InputManager.CreateTChainFromPath(str, str, str, str)('ntuple', directory, *et_friend_directory)
-    #print(type(chain))
-
+    #### Python
+    #chain = InputManager.CreateTChainFromPath('ntuple', directory)
+    # debug
+    #files_list = chain.GetListOfFiles()
+    #for name in files_list:
+        #print(name)
     #rdf = RDataFrame(chain)
+    #col_dict = rdf.AsNumpy()
+    #print(len(col_dict.items()))
+    #print(col_dict)
+
+    ##### C++
+    ROOT.gInterpreter.Declare('''#include "ShapeProducer/inc/InputManager.h"''')
+    ROOT.gInterpreter.Declare('''#include "ShapeProducer/inc/Cutstring.h"''')
+    ROOT.gInterpreter.Declare('''#include "ShapeProducer/inc/CutScheduler.h"''')
+    Cut = ROOT.Cut
+    CutScheduler = ROOT.CutScheduler
+
+    chain = ROOT.shape_producer.InputManager.CreateTChainFromPath(str, str, str, str)('ntuple', directory, *et_friend_directory)
+    rdf = RDataFrame(chain)
+
+    cut_vec = ROOT.std.vector['Cut'](
+            Cut("extraelec_veto<0.5", "extraelec_veto"),
+            Cut("extramuon_veto<0.5", "extramuon_veto"),
+            Cut("iso_1<0.15 && iso_2<0.15", "muon_iso"), Cut(
+                "q_1*q_2<0", "os"),
+            Cut("m_vis > 50","m_vis_cut"),
+            Cut("(trg_singlemuon_27==1 || trg_singlemuon_24==1)", "trg_selection")
+            )
+
 
 
 if __name__ == "__main__":
