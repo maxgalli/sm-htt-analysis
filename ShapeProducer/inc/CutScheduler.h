@@ -3,6 +3,8 @@
 
 using namespace ROOT;
 
+#ifndef CUTSCHEDULER
+#define CUTSCHEDULER
 class CutScheduler {
 
     public:
@@ -28,13 +30,4 @@ class CutScheduler {
         stringvec m_cut_names_vec;
         std::vector<Cut> m_cuts_vec;
 };
-
-CutScheduler::CutScheduler(std::string name, RDataFrame rdf, std::vector<Cut> cuts_vec) {
-    m_name = name;
-    m_cuts_vec = cuts_vec;
-    m_rdf = rdf;
-}
-
-void CutScheduler::applyCuts() {
-    for (auto cut : m_cuts_vec) m_rdf.Filter(cut.getStringcut());
-}
+#endif
