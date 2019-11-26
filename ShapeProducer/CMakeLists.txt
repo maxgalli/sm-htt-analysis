@@ -9,6 +9,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -g")
 find_package(ROOT REQUIRED)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(jitted_code_dir ${CMAKE_BINARY_DIR}/jitted_code)
 add_subdirectory(jsoncpp)
 
 # Set the include paths for the compiler
@@ -22,3 +23,11 @@ target_link_libraries(ShapeProducer ${ROOT_LIBRARIES} jsoncpp)
 #add_executable(gamma gamma.C)
 
 file(COPY shape_producer DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+
+# Copy C++ files with extension .h and .cxx in the same directory
+# in order not to use weird include paths when we use jit code
+# in Python
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${CMAKE_SOURCE_DIR}/inc/ ${jitted_code_dir})
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${CMAKE_SOURCE_DIR}/src/ ${jitted_code_dir})
