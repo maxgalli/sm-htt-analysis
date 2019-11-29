@@ -1,7 +1,7 @@
 #ifndef CUTSTRING_H
 #define CUTSTRING_H
 
-#include "Utils.h"
+#include <string>
 
 class Cut {
     public:

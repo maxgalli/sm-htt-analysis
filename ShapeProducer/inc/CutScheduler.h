@@ -1,6 +1,9 @@
 #ifndef CUTSCHEDULER
 #define CUTSCHEDULER
 
+#include "Utils.h"
+#include "Cutstring.h"
+
 using namespace ROOT;
 
 class CutScheduler {

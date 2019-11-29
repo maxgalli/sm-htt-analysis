@@ -1,3 +1,6 @@
+#ifndef INPUTMANAGER_H
+#define INPUTMANAGER_H
+
 #include <sys/types.h>
 #include <dirent.h>
 
@@ -5,7 +8,6 @@
 #include "Utils.h"
 
 // ROOT headers
-#include "TTree.h"
 #include "TChain.h"
 #include "TFile.h"
 
@@ -33,3 +35,5 @@ void read_root_file(TFile*, tdfvec&);
 // only one ROOT file each (see sketch below).
 template<typename...Args>
 TChain* CreateTChainFromPath(const char*, Args...);
+
+#endif

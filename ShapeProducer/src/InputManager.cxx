@@ -1,4 +1,5 @@
 #include "InputManager.h"
+#include "TTree.h"
 
 void read_directory(const std::string& name, stringvec& v) {
     DIR* dirp = opendir(name.c_str());
