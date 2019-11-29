@@ -16,11 +16,13 @@ add_subdirectory(jsoncpp)
 include_directories(${ROOT_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-add_library(ShapeProducer SHARED src/InputManager.cxx src/Cutstring.cxx)
+add_library(ShapeProducer SHARED src/InputManager.cxx src/Cutstring.cxx src/CutScheduler.cxx)
 target_include_directories(ShapeProducer PRIVATE inc)
 target_link_libraries(ShapeProducer ${ROOT_LIBRARIES} jsoncpp)
 
-#add_executable(gamma gamma.C)
+#add_executable(sample main/sample.cxx)
+#target_include_directories(sample PRIVATE inc)
+#target_link_libraries(sample ${ROOT_LIBRARIES} jsoncpp)
 
 file(COPY shape_producer DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
