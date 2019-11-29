@@ -1,10 +1,8 @@
-#include "Utils.h"
-#include "Cutstring.h"
+#ifndef CUTSCHEDULER
+#define CUTSCHEDULER
 
 using namespace ROOT;
 
-#ifndef CUTSCHEDULER
-#define CUTSCHEDULER
 class CutScheduler {
 
     public:
@@ -30,4 +28,8 @@ class CutScheduler {
         stringvec m_cut_names_vec;
         std::vector<Cut> m_cuts_vec;
 };
+
+ROOT::RDF::RInterface<ROOT::Detail::RDF::RJittedFilter, void> ScheduleCuts(RDataFrame &, std::vector<Cut>);
+
 #endif
+
