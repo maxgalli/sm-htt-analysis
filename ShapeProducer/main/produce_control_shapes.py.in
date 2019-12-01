@@ -172,12 +172,9 @@ def main(args):
     ##### Mixed C++ and Python
     ROOT.gInterpreter.Declare('''#include "{}/InputManager.cxx"'''.format(jitted_code_dir))
 
-    chain = ROOT.CreateTChainFromPath('ntuple', directory,
-            et_friend_directory,
-            mt_friend_directory,
-            tt_friend_directory,
-            em_friend_directory,
-            mm_friend_directory)
+    chain = ROOT.CreateTChainFromPath[str]('ntuple', directory)
+
+    ROOT.EnableImplicitMT()
 
     rdf = RDataFrame(chain)
 
