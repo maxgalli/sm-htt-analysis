@@ -13,6 +13,9 @@ import logging
 logger = logging.getLogger("")
 
 from shape_producer import InputManager
+from shape_producer import Cutstring
+from shape_producer import CutScheduler
+from shape_producer import Channels
 
 from ROOT import RDataFrame
 
@@ -129,6 +132,8 @@ def main(args):
     em_friend_directory = args.em_friend_directory
     mm_friend_directory = args.mm_friend_directory
 
+    jitted_code_dir = '${jitted_code_dir}'
+
     #### No sources
     #regex = directory + '*/*/'
     #rdf = RDataFrame('ntuple', regex)
@@ -147,23 +152,37 @@ def main(args):
     #print(col_dict)
 
     ##### C++
-    ROOT.gInterpreter.Declare('''#include "ShapeProducer/inc/InputManager.h"''')
-    ROOT.gInterpreter.Declare('''#include "ShapeProducer/inc/Cutstring.h"''')
-    ROOT.gInterpreter.Declare('''#include "ShapeProducer/inc/CutScheduler.h"''')
+    """
+    ROOT.gInterpreter.Declare('''#include "{}/InputManager.cxx"'''.format(jitted_code_dir))
+    ROOT.gInterpreter.Declare('''#include "{}/Cutstring.cxx"'''.format(jitted_code_dir))
+    ROOT.gInterpreter.Declare('''#include "{}/CutScheduler.cxx"'''.format(jitted_code_dir))
+
     Cut = ROOT.Cut
     CutScheduler = ROOT.CutScheduler
 
-    chain = ROOT.shape_producer.InputManager.CreateTChainFromPath(str, str, str, str)('ntuple', directory, *et_friend_directory)
+    chain = ROOT.shape_producer.InputManager.CreateTChainFromPath('ntuple', directory,
+            et_friend_directory,
+            mt_friend_directory,
+            tt_friend_directory
+            em_friend_directory
+            mm_friend_directory)
+
+    rdf = RDataFrame(chain)
+    """
+    ##### Mixed C++ and Python
+    ROOT.gInterpreter.Declare('''#include "{}/InputManager.cxx"'''.format(jitted_code_dir))
+
+    chain = ROOT.shape_producer.InputManager.CreateTChainFromPath('ntuple', directory,
+            et_friend_directory,
+            mt_friend_directory,
+            tt_friend_directory,
+            em_friend_directory,
+            mm_friend_directory)
+
     rdf = RDataFrame(chain)
 
-    cut_vec = ROOT.std.vector['Cut'](
-            Cut("extraelec_veto<0.5", "extraelec_veto"),
-            Cut("extramuon_veto<0.5", "extramuon_veto"),
-            Cut("iso_1<0.15 && iso_2<0.15", "muon_iso"), Cut(
-                "q_1*q_2<0", "os"),
-            Cut("m_vis > 50","m_vis_cut"),
-            Cut("(trg_singlemuon_27==1 || trg_singlemuon_24==1)", "trg_selection")
-            )
+    ch = Channels.create_channels("em", "2017", "SM", rdf)
+    rdf2 = ch.apply_cuts()
 
 
 
