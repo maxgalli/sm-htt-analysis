@@ -12,6 +12,7 @@ find_package(ROOT REQUIRED)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(shape_producer_out_package ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/shape_producer)
 set(jitted_code_dir ${CMAKE_BINARY_DIR}/jitted_code)
+set(scripts_dir ${CMAKE_CURRENT_SOURCE_DIR}/scripts)
 add_subdirectory(jsoncpp)
 set(python_scripts
     shape_producer/InputManager.py
@@ -35,6 +36,8 @@ target_link_libraries(ShapeProducer ${ROOT_LIBRARIES} jsoncpp)
 #target_include_directories(sample PRIVATE inc)
 #target_link_libraries(sample ${ROOT_LIBRARIES} jsoncpp)
 
+# Copy shell scripts
+file(COPY ${scripts_dir} DESTINATION ${CMAKE_BINARY_DIR})
 
 # Copy C++ files with extension .h and .cxx in the same directory
 # in order not to use weird include paths when we use jit code

@@ -172,7 +172,7 @@ def main(args):
     ##### Mixed C++ and Python
     ROOT.gInterpreter.Declare('''#include "{}/InputManager.cxx"'''.format(jitted_code_dir))
 
-    chain = ROOT.shape_producer.InputManager.CreateTChainFromPath('ntuple', directory,
+    chain = ROOT.CreateTChainFromPath('ntuple', directory,
             et_friend_directory,
             mt_friend_directory,
             tt_friend_directory,

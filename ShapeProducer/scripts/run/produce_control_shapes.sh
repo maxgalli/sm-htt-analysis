@@ -6,13 +6,13 @@ CHANNELS=${@:2}
 
 BINNING=shapes/binning.yaml
 
-source MyUtils/clean.sh
-source MyUtils/setup_cvmfs_sft.sh
-source MyUtils/setup_python.sh
-source MyUtils/setup_samples.sh $ERA
+source scripts/utils/clean.sh
+source scripts/utils/setup_cvmfs_root.sh
+source scripts/utils/setup_python.sh
+source scripts/utils/setup_samples.sh $ERA
 
 # Produce shapes
-python3 MyRunScripts/produce_control_shapes_${ERA}.py \
+python3 main/produce_control_shapes.py \
     --directory $ARTUS_OUTPUTS \
     --datasets $KAPPA_DATABASE \
     --binning $BINNING \
