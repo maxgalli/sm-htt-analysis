@@ -24,7 +24,7 @@ class CutScheduler:
     def apply_cuts(self):
         internal_rdf = self._in_rdf
         for cut in self._cuts:
-            self._out_rdf = internal_rdf.Filter(cut.string)
+            self._out_rdf = internal_rdf.Filter(cut.expression)
             internal_rdf = self.out_rdf
         return self._out_rdf
 

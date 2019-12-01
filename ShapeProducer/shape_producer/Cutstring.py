@@ -1,9 +1,17 @@
 import ROOT
 
-class Cut():
-    def __init__(self, string, name):
+class Cut:
+    def __init__(self, expression, name):
+        self._expression = expression
         self._name = name
-        self._string = string
+
+    @property
+    def expression(self):
+        return self._expression
+
+    @expression.setter
+    def expression(self, a_expression):
+        self._expression = a_expression
 
     @property
     def name(self):
@@ -13,10 +21,7 @@ class Cut():
     def name(self, a_name):
         self._name = a_name
 
-    @property
-    def string(self):
-        return self._string
-
-    @string.setter
-    def string(self, a_string):
-        self._string = a_string
+class CutVec(list):
+    def __init__(self, *args):
+        for cut in args:
+            self.append(cut)
